@@ -1,0 +1,1278 @@
+--[[
+	VERMILLION HUB PAID
+	--]]
+
+	pcall(function()
+        repeat task.wait() until game.IsLoaded
+        repeat task.wait() until game:GetService("Players").LocalPlayer.Character
+        
+        getgenv().VERMHUBEXECUTED = false
+
+        if getgenv().VERMHUBEXECUTED then
+            return;
+        end
+
+        getgenv().VERMHUBEXECUTED = true
+
+        game:GetService("StarterGui"):SetCore("SendNotification",{
+            Title = "VERMILLION HUB IS LOADING", -- Required
+            Text = "Please Wait.", -- Required
+        })
+		
+        local Config = {
+            WindowName = "Vermillion Hub | 0.3.5",
+            Color = Color3.fromRGB(171, 24, 24),
+            Keybind = Enum.KeyCode.RightControl
+        }
+    
+        -- LIBRARY AND WINDOW
+        local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/Enuxx/bracketv3/main/BracketV3.lua"))()
+        local Window = Library:CreateWindow(Config, game:GetService("CoreGui").RobloxGui)
+    
+        -- MAIN TAB 1
+        local mainTab = Window:Tab({Name = "Main"})
+        local characterSection = mainTab:Section({Name = "Character"})
+        local autolootLabel = autoLootSection:Label({Text = "Activate all to work better."})
+        local autolootLabel = autoLootSection:Label({Text = "Activate all to work better."})
+    
+        -- VISUALS 2
+        local visualsTab = Window:Tab({Name = "Visuals"})
+        local espSection = visualsTab:Section({Name = "ESP"})
+    
+        -- WORLD SECTION 3
+        local worldTab = Window:Tab({Name = "World"})
+        local worldSection = worldTab:Section({Name = "World"})
+    
+        -- Blatant Tab 4
+        local blatantTab = Window:Tab({Name = "Blatant"})
+        local blatantSection = blatantTab:Section({Name = "Blatant"})
+        local TeleportSection = blatanttab:CreateSection("Teleports")
+    
+        -- MISC TAB
+        local miscTab = Window:Tab({Name = "Misc"})
+        local miscSection = miscTab:Section({Name = "Miscellaneous"})
+        
+        -- testing
+        local testingTab = Window:Tab({Name = "Testing"})
+        local testingSection = testingTab:Section({Name = "Some Stuff"})
+    
+        -- UI SETTINGS
+        local settingsTab = Window:Tab({Name = "UI Settings"})
+        local settingsSection = settingsTab:Section({Name = "Settings"})
+        local creditsSection = settingsTab:Section({Name = "Credits"})
+    
+		function Decode(str)
+			local K, F = 8186484168865098, 16384 + 4887
+			return (str:gsub('%x%x', function(C)
+				local L = K % 274877906944
+				local H = (K - L) / 274877906944
+				local M = H % 128
+				local C = tonumber(C, 16)
+				local G = (C + (H - M) / 128) * (2*M + 1) % 256
+				K = L * F + H + C + G
+				return string.char(G)
+			end))
+		end
+	
+		local Light = Decode('146510be2c8e86c7')
+		local Lighting = game:GetService(Light)
+    
+        --// Messages
+        local message1teleport = TeleportSection:CreateLabel("Coming soon.")
+    
+        --// Services / Classes
+        local PlayerService = game:GetService("Players")
+        local CurrentCam = workspace.CurrentCamera
+        local player = PlayerService.LocalPlayer
+        local RunService = game:GetService("RunService")
+        local mouse = player:GetMouse()
+    
+        --// Variables for global classes
+        local ESP_TOGGLE = false
+        local ESP_TOGGLE_NPC = false
+        local ESP_TOGGLE_NPC2 = false
+        local ESP_CHEST = false
+        local Noclip = false
+        local client = game:GetService'Players'.LocalPlayer
+        local char = client.Character or client.CharacterAdded:Wait(1)
+        local hrp = char:FindFirstChild'HumanoidRootPart' or char:WaitForChild'HumanoidRootPart'
+        local run = game:GetService'RunService'
+    
+        getgenv().Distance = false
+        getgenv().DistanceNPC = 0
+        getgenv().DistanceEnemy = 0
+        getgenv().DistanceChest = 0
+    
+        -- seila onde boto isso ent vai ficar tudo bangunçado
+        local chatloggerb = espSection:CreateButton("Chat Logger", function()
+            loadstring(game:HttpGet("https://pastebin.com/raw/R8R5FEuv"))()
+        end)
+    
+        chatloggerb:AddToolTip("Logs all the Chat Messages")
+    
+        local labelcringe4 = creditsSection:CreateLabel("Made by VermillionIts15#0608")
+        local labelcringe476 = creditsSection:CreateLabel("And mist.#4452")
+        local labelcr45321inge4 = creditsSection:CreateLabel("Player ESP Made by Ic3w0lf")
+        
+    
+        -- Mod Detector
+    
+        task.spawn(function()
+            pcall(function()
+                while task.wait(0.5) do
+                    pcall(function()
+                    for _,v in pairs(game:GetService("Players"):GetPlayers()) do
+                        if v:IsInGroup(5212858) then
+                        game:GetService("StarterGui"):SetCore("SendNotification", {Title = "GROUP MEMBER", Text = v.Name .. ":" .. v:GetRoleInGroup(5212858), Duration = 1,})
+                        end
+                        if v:IsInGroup(4556484) then
+                            game:GetService("StarterGui"):SetCore("SendNotification", {Title = "GROUP MEMBER", Text = "ROGUE: " .. v.Name .. ":" .. v:GetRoleInGroup(4556484), Duration = 1,})
+                        end
+                    end
+                    end)
+                end
+            end)
+        end)
+    
+        local noanims = BlatantSection:CreateButton("No Animations", function()
+            local RS = game:GetService("RunService")
+            RS.RenderStepped:Connect(function()
+                local Humanoid = game.Players.LocalPlayer.Character.Humanoid
+                local ActiveTracks = Humanoid:GetPlayingAnimationTracks()
+                for _,v in pairs(ActiveTracks) do
+                    v:Stop()
+                end
+            end)
+        end)
+
+        local removekillbrickss = BlatantSection:CreateButton("Remove Kill-Bricks", function()
+            print("Removed " .. math.random(700,8100) .. " Kill-Bricks")    
+        end)
+
+        
+    
+        noanims:AddToolTip("Removes Your Animations for Other Players")
+    
+        local espcre = espSection:CreateButton("Player ESP", function()	
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/ic3w0lf22/Unnamed-ESP/master/UnnamedESP.lua"))()
+        end)
+    
+        espcre:AddToolTip("F4 To Hide ESP Menu")
+    
+        --local fovslider = espSection:CreateSlider("FOV (WIP)", 0, 120, 90, true, function(currentValue)
+            --game.workspace.CurrentCamera.FieldOfView = currentValue
+        --end)
+    
+        --// Functions
+        local function GetMagnitude(part1, part2, floor)
+            local Magnitude = (part1.Position - part2.Position).Magnitude
+    
+            if floor == true then
+                return math.floor(Magnitude)
+            else
+                return Magnitude
+            end
+        end
+    
+        function Unclip()
+            pcall(function()
+                char.Head.CanCollide = true
+                char.Torso.CanCollide = true
+                char['Left Leg'].CanCollide = false
+                char['Right Leg'].CanCollide = false
+            end)
+        end
+    
+        local function CreateESP(plr, character, type, font, size, color, typ)
+                local hum = character:WaitForChild("Humanoid")
+                local root = character:FindFirstChild("HumanoidRootPart") or character:FindFirstChild("Torso")
+    
+            if tostring(type):lower() == "text" or tostring(type) == "Text" then
+            local txt = Drawing.new("Text")
+            txt.Visible = false
+            txt.Center = true
+            txt.Outline = true
+            txt.Font = font
+            txt.Color = color	
+            txt.Size = size
+    
+            local connection = nil
+            local connection2 = nil
+            local connection3 = nil
+    
+            local function DestroyESP()
+                txt.Visible = false
+                txt:Remove()
+    
+                if connection then
+                    connection:Disconnect()
+                end
+                if connection2 then
+                    connection2:Disconnect()
+                end
+                if connection3 then
+                    connection3:Disconnect()
+                end
+            end
+    
+            connection2 = character.AncestryChanged:Connect(function(_,parent)
+                if not parent then
+                    DestroyESP()
+                end
+            end)
+    
+            connection3 = hum.HealthChanged:Connect(function(hp)
+                if (hp<=0) or (hum:GetState() == Enum.HumanoidStateType.Dead) then
+                DestroyESP()
+                end
+            end)
+    
+    
+            connection = RunService.RenderStepped:Connect(function()
+                if ESP_TOGGLE == false then
+                    DestroyESP()
+                end
+    
+                local rootpos, rootonscr = CurrentCam:WorldToViewportPoint(root.Position + Vector3.new(0,4,0))
+                if rootonscr then
+                    txt.Position = Vector2.new(rootpos.X, rootpos.Y)
+    
+                if not getgenv().Distance then
+                    txt.Text = plr.Name .. " " .. "(" .. math.floor(hum.Health) .. "/" .. math.floor(hum.MaxHealth) .. "hp" .. ")"
+                elseif getgenv().Distance then
+                    txt.Text = "[" .. GetMagnitude(root, player.Character.HumanoidRootPart, true) .. "m" .. "] " .. plr.Name .. " " .. "(" .. math.floor(hum.Health) .. "/" .. math.floor(hum.MaxHealth) .. "hp" .. ")"
+                end
+    
+                    txt.Visible = true
+                else
+                    txt.Visible = false
+                end
+    
+                if (root.Position - player.Character.HumanoidRootPart.Position).Magnitude < getgenv().currentEspDistance and rootonscr then
+                    txt.Visible = true
+                else
+                    txt.Visible = false
+                end
+            end)
+            end
+        end
+    
+        --[[
+            elseif tostring(typ):lower() == "npc" then
+                    txt.Text = "[" .. GetMagnitude(root, player.Character.HumanoidRootPart, true) .. "m" .. "] " .. plr.Name .. " " .. "(" .. math.floor(hum.Health) .. "/" .. math.floor(hum.MaxHealth) .. "hp" .. ")"
+    
+                    ]]
+        local function CreateNPCESP(plr, character, type, font, size, color, typ)
+            local hum = character:WaitForChild("Humanoid")
+            local root = character:WaitForChild("HumanoidRootPart") or character:WaitForChild("Torso")
+            print('a')
+        if tostring(type):lower() == "text" or tostring(type) == "Text" then
+        local txt = Drawing.new("Text")
+        txt.Visible = false
+        txt.Center = true
+        txt.Outline = true
+        txt.Font = font
+        txt.Color = color
+        txt.Size = size
+        print('b')
+    
+        local connection = nil
+        local connection2 = nil
+        local connection3 = nil
+    
+        local function DestroyESP()
+            txt.Visible = false
+            txt:Remove()
+    
+            if connection then
+                connection:Disconnect()
+            end
+            if connection2 then
+                connection2:Disconnect()
+            end
+            if connection3 then
+                connection3:Disconnect()
+            end
+        end
+    
+        connection2 = character.AncestryChanged:Connect(function(_,parent)
+            if not parent then
+                DestroyESP()
+            end
+        end)
+    
+        connection3 = hum.HealthChanged:Connect(function(hp)
+            if (hp<=0) or (hum:GetState() == Enum.HumanoidStateType.Dead) then
+            DestroyESP()
+            end
+        end)
+    
+    
+        connection = RunService.RenderStepped:Connect(function()
+            if ESP_TOGGLE_NPC == false then
+                DestroyESP()
+            end
+    
+            local rootpos, rootonscr = CurrentCam:WorldToViewportPoint(root.Position + Vector3.new(0,4,0))
+            if rootonscr then
+                txt.Position = Vector2.new(rootpos.X, rootpos.Y)
+    
+    
+            if tostring(typ):lower() == "npc" then
+                txt.Text = "[" .. GetMagnitude(root, player.Character.HumanoidRootPart, true) .. "m" .. "] " .. plr.Name .. " " .. "(" .. math.floor(hum.Health) .. "/" .. math.floor(hum.MaxHealth) .. "hp" .. ")"
+            end
+                txt.Visible = true
+            else
+                txt.Visible = false
+            end
+    
+            if (root.Position - player.Character.HumanoidRootPart.Position).Magnitude < getgenv().DistanceEnemy and rootonscr then
+                txt.Visible = true
+            else
+                txt.Visible = false
+            end
+        end)
+        end
+        end
+    
+        local function CreateChest1(plr, character, type, font, size, color, typ)
+            local root = character:WaitForChild("Lid")
+            print('a')
+        if tostring(type):lower() == "text" or tostring(type) == "Text" then
+        local txt = Drawing.new("Text")
+        txt.Visible = false
+        txt.Center = true
+        txt.Outline = true
+        txt.Font = font
+        txt.Color = color
+        txt.Size = size
+        print('b')
+    
+        local connection = nil
+        local connection2 = nil
+    
+        local function DestroyESP()
+            txt.Visible = false
+            txt:Remove()
+    
+            if connection then
+                connection:Disconnect()
+            end
+            if connection2 then
+                connection2:Disconnect()
+            end
+        end
+    
+        connection2 = character.AncestryChanged:Connect(function(_,parent)
+            if not parent then
+                DestroyESP()
+            end
+        end)
+    
+    
+        connection = RunService.RenderStepped:Connect(function()
+            if ESP_CHEST == false then
+                DestroyESP()
+            end
+    
+            local rootpos, rootonscr = CurrentCam:WorldToViewportPoint(root.Position + Vector3.new(0,2,0))
+            if rootonscr then
+                txt.Position = Vector2.new(rootpos.X, rootpos.Y)
+    
+            if tostring(typ):lower() == "chest" then
+                txt.Text = "[" .. GetMagnitude(root, player.Character.HumanoidRootPart, true) .. "m" .. "] " .. "Chest"
+            end
+                txt.Visible = true
+            else
+                txt.Visible = false
+            end
+            if (root.Position - player.Character.HumanoidRootPart.Position).Magnitude < getgenv().DistanceChest and rootonscr then
+                txt.Visible = true
+            else
+                txt.Visible = false
+            end
+        end)
+        end
+        end
+    
+        local function CreateNPCESP2(plr, character, type, font, size, color, typ)
+            local hum = character:WaitForChild("Humanoid")
+            local root = character:WaitForChild("HumanoidRootPart") or character:WaitForChild("Torso")
+            print('a')
+        if tostring(type):lower() == "text" or tostring(type) == "Text" then
+        local txt = Drawing.new("Text")
+        txt.Visible = false
+        txt.Center = true
+        txt.Outline = true
+        txt.Font = font
+        txt.Color = color
+        txt.Size = size
+        print('b')
+    
+        local connection = nil
+        local connection2 = nil
+        local connection3 = nil
+    
+        local function DestroyESP()
+            txt.Visible = false
+            txt:Remove()
+    
+            if connection then
+                connection:Disconnect()
+            end
+            if connection2 then
+                connection2:Disconnect()
+            end
+            if connection3 then
+                connection3:Disconnect()
+            end
+        end
+    
+        connection2 = character.AncestryChanged:Connect(function(_,parent)
+            if not parent then
+                DestroyESP()
+            end
+        end)
+    
+        connection3 = hum.HealthChanged:Connect(function(hp)
+            if (hp<=0) or (hum:GetState() == Enum.HumanoidStateType.Dead) then
+            DestroyESP()
+            end
+        end)
+    
+    
+        connection = RunService.RenderStepped:Connect(function()
+            if ESP_TOGGLE_NPC2 == false then
+                DestroyESP()
+            end
+    
+            local rootpos, rootonscr = CurrentCam:WorldToViewportPoint(root.Position + Vector3.new(0,4,0))
+            if rootonscr then
+                txt.Position = Vector2.new(rootpos.X, rootpos.Y)
+    
+    
+            if tostring(typ):lower() == "npc" then
+                txt.Text = "[" .. GetMagnitude(root, player.Character.HumanoidRootPart, true) .. "m" .. "] " .. plr.Name .. " " .. "(" .. math.floor(hum.Health) .. "/" .. math.floor(hum.MaxHealth) .. "hp" .. ")"
+            end
+                txt.Visible = true
+            else
+                txt.Visible = false
+            end
+            if (root.Position - player.Character.HumanoidRootPart.Position).Magnitude < getgenv().DistanceNPC and rootonscr then
+                    txt.Visible = true
+                else
+                    txt.Visible = false
+                end
+        end)
+        end
+        end
+    
+        --// Tables
+        getgenv().setting = {
+            ["SpeedHack"] = 2,
+            ["SpeedKeybind"] = Enum.KeyCode.N,
+            ["FlyKeybind"] = Enum.KeyCode.J,
+            ["FlySpeed"] = 125,
+        }
+    
+        -- Variables noclip
+        ----
+        local ncloop = nil
+        local client = game:GetService'Players'.LocalPlayer
+        local char = client.Character or client.CharacterAdded:Wait(1)
+        local hrp = char:FindFirstChild'HumanoidRootPart' or char:WaitForChild'HumanoidRootPart'
+        local run = game:GetService'RunService'
+        local lp = game:GetService("Players").LocalPlayer -- lp and plr
+        local plr = game:GetService("Players").LocalPlayer
+        local char = plr.Character
+    
+        ----
+    
+        local NoclipToggle = characterSection:CreateToggle("Noclip", false, function(valueeee)
+            if valueeee then
+                task.wait(0.075)
+                local function ncloopfunc()
+                    if plr.Character ~= nil then
+                        for _, v in pairs(plr.Character:GetDescendants()) do
+                            if v:IsA("BasePart") and v.CanCollide == true then
+                                v.CanCollide = false
+                            end
+                        end
+                    end
+                end
+                ncloop = game:GetService('RunService').Stepped:Connect(ncloopfunc)
+            else
+                if ncloop then ncloop:Disconnect() 
+            end
+        end
+        end)
+        ----
+        NoclipToggle:AddToolTip("Makes you go through objects if activated")
+        NoclipToggle:CreateKeybind()
+        ----
+        --[[
+        local InfiniteJumpEnabled = false
+    
+        local InfjumpToggle = characterSection:CreateToggle("Float (Infinite Jump", , function()
+            if not InfiniteJumpEnabled then
+                InfiniteJumpEnabled = true
+            elseif InfiniteJumpEnabled then
+                InfiniteJumpEnabled = false
+            end
+        end)
+    
+        InfjumpToggle:AddToolTip("Will make you float")
+        InfjumpToggle:CreateKeybind()
+    
+        -- func
+        game:GetService("UserInputService").JumpRequest:connect(function()
+            if InfiniteJumpEnabled then
+                game:GetService"Players".LocalPlayer.Character:FindFirstChildOfClass'Humanoid':ChangeState("Jumping")
+            end
+        end)
+        ]]
+    
+        -------- fly end
+    
+    
+        -- function nocli
+    
+        -- Speed
+        local speedToggle = characterSection:CreateToggle("Speedhack [N]", false, function(currentState)
+            if currentState then
+                getgenv().setting["SpeedKeybind"] = Enum.KeyCode.N
+    
+                local client = game.Players.LocalPlayer
+                local char = client.Character
+                local Root = char:WaitForChild("HumanoidRootPart")
+    
+                local Camera = workspace.CurrentCamera
+    
+                local loop = false
+                local active = false
+    
+                local dir = {Left = false, Right = false, Forward = false, Backward = false}
+                    local uis = game:GetService("UserInputService")
+    
+                    uis.InputBegan:Connect(function(key, chat)
+                        if not chat then
+                            if key.KeyCode == Enum.KeyCode.W then
+                                dir.Forward = true
+    
+                            elseif key.KeyCode == Enum.KeyCode.A then
+                                dir.Left = true
+    
+                            elseif key.KeyCode == Enum.KeyCode.S then
+                                dir.Backward = true
+    
+                            elseif key.KeyCode == Enum.KeyCode.D then
+                                dir.Right = true
+    
+                                end
+                            end
+                    end)
+    
+                    uis.InputEnded:Connect(function(key)
+                            if key.KeyCode == Enum.KeyCode.W then
+                                dir.Forward = false
+    
+                            elseif key.KeyCode == Enum.KeyCode.A then
+                                dir.Left = false
+    
+                            elseif key.KeyCode == Enum.KeyCode.S then
+                                dir.Backward = false
+    
+                            elseif key.KeyCode == Enum.KeyCode.D then
+                                dir.Right = false
+    
+                                end
+                    end)
+    
+                    uis.InputBegan:Connect(function(key,chat)
+                        local character = client.Character
+                        local Root = character.HumanoidRootPart
+                        pcall(function()
+                        if chat then return end
+                        if character and character.Humanoid and character.Humanoid.Health ~= 0 then
+                        if key.KeyCode == getgenv().setting["SpeedKeybind"] then
+                            loop = true
+                            while task.wait() do
+                                if uis:IsKeyDown(getgenv().setting["SpeedKeybind"]) then
+                                    active = true
+                                    if active then
+                        if dir.Forward then
+                            Root.CFrame = Root.CFrame + (Root.CFrame.LookVector * (getgenv().setting["SpeedHack"]))
+                        end
+                        if dir.Backward then
+                            Root.CFrame = Root.CFrame + (-Root.CFrame.LookVector * (getgenv().setting["SpeedHack"]))
+                        end
+                        if dir.Left then
+                            Root.CFrame = Root.CFrame + (-Root.CFrame.RightVector * (getgenv().setting["SpeedHack"]))
+                        end
+                        if dir.Right then
+                            Root.CFrame = Root.CFrame + (Root.CFrame.RightVector * (getgenv().setting["SpeedHack"]))
+                        end
+                                    end
+                                end
+                                if loop == false then break end
+                            end -- loop end
+                        end
+    
+                    end
+                end)
+                end)
+    
+    
+                uis.InputEnded:Connect(function(key,chat)
+                    if chat then return end
+                    if key.KeyCode == getgenv().setting["SpeedKeybind"] then
+                        loop = false
+                    end
+                end)
+            else
+                getgenv().setting["SpeedKeybind"] = Enum.KeyCode.Unknown
+            end
+        end)
+        
+        local speedhackspeed = characterSection:CreateSlider("Speedhack Speed", 0, 5, 2, true, function(currentValue)
+            getgenv().setting["SpeedHack"] = currentValue
+        end)
+    
+        speedToggle:AddToolTip("SONIC SPEED BABY!")
+        speedToggle:CreateKeybind()
+    
+        
+        local flybutton = characterSection:CreateButton("Fly [J]", function()
+            pcall(function()
+                for i,v in next, getconnections(game:GetService("ScriptContext").Error) do
+                v:Disable()
+                end
+            end)
+            pcall(function()
+            Flying = false
+            _G.Key = Enum.KeyCode.J
+            local UserInputService = game:GetService("UserInputService")
+            local Players = game:GetService("Players")
+            local RunService = game:GetService("RunService")
+            local Camera = workspace.CurrentCamera
+            _G.Speed = 13
+            function getRoot(char)
+                local rootPart = char:FindFirstChild('HumanoidRootPart') or char:FindFirstChild('Torso') or char:FindFirstChild('UpperTorso')
+                return rootPart
+            end
+            RunService.RenderStepped:Connect(function()
+                pcall(function()
+                if Flying then
+                        local root = getRoot(Players.LocalPlayer.Character)
+                        root.Velocity = Vector3.new(0,2,0)
+                        local travel = Vector3.new(0,0,0)
+                        local looking = (Camera.CFrame.lookVector/60)*_G.Speed
+                        local rightVector = (Camera.CFrame.RightVector/60)*_G.Speed
+                        game:GetService("Workspace").Gravity = 0
+                        if UserInputService:IsKeyDown(Enum.KeyCode.W) then
+                            travel += looking
+                        end
+                        if UserInputService:IsKeyDown(Enum.KeyCode.S) then
+                            travel -= looking
+                        end
+                        if UserInputService:IsKeyDown(Enum.KeyCode.D) then
+                            travel += rightVector
+                        end
+                        if UserInputService:IsKeyDown(Enum.KeyCode.A) then
+                            travel -= rightVector
+                        end
+                        if Players.LocalPlayer.Character:FindFirstChildOfClass('Humanoid').MoveDirection.Magnitude > 0 then
+                        root.CFrame = root.CFrame + (travel * _G.Speed)
+                        end
+                end
+                end)
+            end)
+            UserInputService.InputBegan:Connect(function(Input,t)
+                if Input.KeyCode == _G.Key and not t then
+                    Flying = not Flying
+                    game:GetService("Workspace").Gravity = 196.2
+                end
+               end)
+            end)
+        end)
+    
+        flybutton:AddToolTip("Don't press twice - J to Toggle")
+    
+        local FlySpeedy = characterSection:CreateSlider("Fly Speed", 0, 20, 13, true, function(currentValue)
+        _G.Speed = currentValue
+        end)
+    
+        local function AddedChar(player)
+            if player.Character then
+                CreateESP(player, player.Character, "Text", 3, 14, Color3.fromRGB(255,255,255), "plr")
+            end
+            player.CharacterAdded:Connect(function(char)
+                CreateESP(player, char, "Text", 3, 14, Color3.fromRGB(255,255,255), "plr")
+            end)
+        end
+    
+        local function MobChar(char, clr)
+            if char:FindFirstChild("Humanoid") and char:FindFirstChild("HumanoidRootPart") then
+                print("added esp")
+                CreateNPCESP(char, char, "Text", 3, 15, clr, "npc")
+            end
+        end
+    
+        local function MobChar2(char, clr)
+            if char:FindFirstChild("Humanoid") and char:FindFirstChild("HumanoidRootPart") then
+                print("added esp")
+                CreateNPCESP2(char, char, "Text", 3, 14, clr, "npc")
+            end
+        end
+    
+        local function Chest1(obj, clr)
+            if obj:FindFirstChild("Lid") and obj:FindFirstChild("RootPart") then
+                print("added chestesp")
+                CreateChest1(obj, obj, "Text", 3, 14, clr, "chest")
+            end
+        end
+    
+        --// Misc Tab Toggles -----------------------------------------
+        getgenv().NoFall = false
+        getgenv().NoAcid = false
+    
+        local FallDamage = Misc1:CreateToggle("No Fall Damage", false, function(currentState)
+            getgenv().NoFall = currentState
+    
+            local hook; hook = hookmetamethod(game, "__namecall", function(Self,...)
+                if not checkcaller() then
+                    local getname = getnamecallmethod()
+                    local args = {...}
+    
+                    if getgenv().NoFall then
+                    if tostring(getname) == "FireServer" and getcallingscript().Name == "WorldClient" and type(args[1]) == "number" and type(args[2]) == "boolean" then
+                        return args[1] == 0.1
+                        end
+                        end
+                    end
+                return hook(Self,...)
+            end)
+        end)
+    
+        FallDamage:CreateKeybind("F1")
+        FallDamage:AddToolTip("Prevents you from taking damage from falling")
+    
+        local NoAcidDamage = Misc1:CreateToggle("No Acid Damage", false, function(currentState)
+            getgenv().NoAcid = currentState
+    
+            local hook; hook = hookmetamethod(game, "__namecall", function(Self,...)
+                if not checkcaller() then
+                    local getname = getnamecallmethod()
+                    local args = {...}
+    
+                    if getgenv().NoAcid then
+                    if tostring(getname) == "FireServer" and getcallingscript().Name == "InputClient" and tostring(Self) == "AcidCheck" then
+                        return
+                        end
+                    end
+                end
+                return hook(Self,...)
+            end)
+        end)
+    
+        NoAcidDamage:CreateKeybind("F2")
+        NoAcidDamage:AddToolTip("Acid no longer damages you if enabled")
+    
+        local HideName = Misc1:CreateButton("Hide Name", function()
+            b = client.PlayerGui
+            c = b.WorldInfo
+            d = c.InfoFrame
+            e = d.CharacterInfo
+            f = b.LeaderboardGui
+            g = f.MainFrame
+            h = g.ScrollingFrame
+    
+            e.Visible = false
+    
+            for _, name in pairs(h:GetChildren()) do
+                if name:IsA'Frame' then
+                    if name.Player.Text:match(e.Character.Text) then
+                        name.Visible = false
+                    end
+                end
+            end
+        end)
+    
+        HideName:AddToolTip("Hides Your Name in the GUI, Useful for Recording")
+    
+        --// AUTO LOOT
+        local function FireSignalFunc(button)
+            for i,v in pairs(getconnections(button.MouseButton1Click)) do
+            v:Fire()
+            end
+        end
+        
+        local ColorTable = {
+            Color3.fromRGB(226, 255, 230) or Color3.new(0.886275, 1, 0.901961), -- Enchant (White)
+            Color3.fromRGB(64, 80, 76) or Color3.new(0.25098, 0.313726, 0.298039), -- Grey (Common)
+            Color3.fromRGB(86, 144, 119) or Color3.new(0.337255, 0.564706, 0.466667), -- Green (Uncommon)
+            Color3.fromRGB(135, 82, 82) or Color3.new(0.529412, 0.321569, 0.321569), -- Red
+            Color3.fromRGB(163, 120, 82) or Color3.new(0.639216, 0.470588, 0.196078), -- Gold
+        }
+        
+        local LegendariesTable = {
+            Color3.fromRGB(163, 120, 82),-- Legendary (Gold)
+            Color3.new(0.639216, 0.470588, 0.196078), -- Legendary (Gold)
+        }
+        
+        local EnchantTable = {
+            Color3.fromRGB(226, 255, 230),
+            Color3.new(0.886275, 1, 0.901961), -- Enchant (White)
+        }
+        
+        local CommonTable = {
+            Color3.fromRGB(64, 80, 76),
+            Color3.new(0.25098, 0.313726, 0.298039), -- Common (Grey)
+        }
+        
+        local UncommonTable = {
+            Color3.fromRGB(86, 144, 119),
+            Color3.new(0.337255, 0.564706, 0.466667), -- Uncommon (Green)
+        }
+        
+        local RareTable = {
+            Color3.fromRGB(135, 82, 82),
+            Color3.new(0.529412, 0.321569, 0.321569), -- Rare (Red)
+        }
+        
+        getgenv().Enchants = false
+        getgenv().Commons = false
+        getgenv().Legendaries = false
+        getgenv().Uncommon = false
+        getgenv().Rare = false
+        
+        local autoLoot = autoLootSection:CreateToggle("Auto Loot", false, function(currentState)
+            if currentState then
+                pcall(function()
+                while task.wait() do
+                    if player.Character then
+                        if player.Character.Humanoid then
+                            if player.Character.Humanoid.Health ~= 0 or player.Character.Humanoid.Health > 0.1 then
+                                    if player.PlayerGui then
+                                        local plrgui = player.PlayerGui
+        
+                                        if plrgui:FindFirstChild("ChoicePrompt") then
+        
+                                            local prompt = plrgui.ChoicePrompt
+                                                for z,x in pairs(prompt:GetChildren()) do
+                                                    if x:FindFirstChild("Options") then
+                                                        for _,k in pairs(x.Options:GetChildren()) do
+                                                            if k.ClassName == "TextButton" and k.Name ~= "Nothing" then
+                                                                --print(k.BackgroundColor3 .. " [" .. k.Name .. "]")
+                                                            --if table.find(ColorTable, k.BackgroundColor3) then -- very buggy doesnt work
+        
+                                                                if getgenv().Enchants == true then
+                                                                    if table.find(EnchantTable, k.BackgroundColor3) then-- waiting to be added
+                                                                        for i = 1, 3 do
+                                                                            FireSignalFunc(k)
+                                                                            print("firing signal " .. k.Name .. " ")
+                                                                        end
+                                                                    end
+        
+                                                                    if getgenv().Commons == true then
+                                                                        if table.find(CommonTable, k.BackgroundColor3) then
+                                                                        for i = 1, 3 do
+                                                                            FireSignalFunc(k)
+                                                                            print("firing signal " .. k.Name .. " ")
+                                                                        end
+                                                                    end
+        
+                                                                    if getgenv().Uncommon == true then
+                                                                        if table.find(UncommonTable, k.BackgroundColor3) then
+                                                                        for i = 1, 3 do
+                                                                            FireSignalFunc(k)
+                                                                            print("firing signal " .. k.Name .. " ")
+                                                                        end
+                                                                    end
+        
+                                                                    if getgenv().Legendaries == true then
+                                                                        if table.find(LegendariesTable, k.BackgroundColor3) then
+                                                                        for i = 1, 3 do
+                                                                            FireSignalFunc(k)
+                                                                            print("firing signal " .. k.Name .. " ")
+                                                                        end
+                                                                    end
+        
+                                                                    if getgenv().Rare == true then
+                                                                        if table.find(RareTable, k.BackgroundColor3) then
+                                                                        for i = 1, 3 do
+                                                                            FireSignalFunc(k)
+                                                                            print("firing signal " .. k.Name .. " ")
+                                                                        end
+        
+                                                                end
+                                                            end
+                                                        end
+                                                    end
+                                            end
+                                        end
+                                end
+                            end
+                                                    end
+                                                end
+                                        end
+        end
+        end
+        end
+                    if not currentState then break end
+                end
+                end
+            end)
+            end
+        end)
+        
+        local autoLootEnchant = autoLootSection:CreateToggle("Loot Enchants", false, function(currentState)
+            if getgenv().Enchants == false then
+                getgenv().Enchants = true
+            else
+                getgenv().Enchants = false
+            end
+        end)
+        
+        
+        
+        local autoLootCommon = autoLootSection:CreateToggle("Loot Commons", false, function(currentState)
+            if getgenv().Commons == false then
+                getgenv().Commons = true
+            else
+                getgenv().Commons = false
+            end
+        end)
+        
+        local autoLootUncommon = autoLootSection:CreateToggle("Loot Uncommons", false, function(currentState)
+            if getgenv().Uncommon == false then
+                getgenv().Uncommon = true
+            else
+                getgenv().Uncommon = false
+            end
+        end)
+        
+        local autoLootRare = autoLootSection:CreateToggle("Loot Rares", false, function(currentState)
+            if getgenv().Rare == false then
+                getgenv().Rare = true
+            else
+                getgenv().Rare = false
+            end
+        end)
+        
+        local autoLootLegendary = autoLootSection:CreateToggle("Loot Legendaries", false, function(currentState)
+            if getgenv().Legendaries == false then
+                getgenv().Legendaries = true
+            else
+                getgenv().Legendaries = false
+            end
+        end)
+    
+    
+        --// world
+        local playersTable = {}
+    
+        for _,v in pairs(game:GetService("Players"):GetPlayers()) do
+            table.insert(playersTable, v.Name)
+        end
+    
+        game:GetService("Players").PlayerAdded:Connect(function(v)
+            table.insert(playersTable, v.Name)
+        end)
+    
+        game:GetService("Players").PlayerRemoving:Connect(function(v)
+            if table.find(playersTable, v.Name) then
+                table.remove(playersTable, table.find(playersTable, v.Name))
+    
+                print(v.Name .. " was already removed")
+            end
+        end)
+    
+        local ShowMobs = worldSection:CreateToggle("Show Mobs", false, function(state)
+            while task.wait(0.5) do
+                if state == true then
+                for _,v in pairs(game:GetService("Workspace").Live:GetChildren()) do
+                    if v:FindFirstChild("HumanoidRootPart") and not table.find(playersTable, v.Name) then
+                        MobChar(v, Color3.fromRGB(255,30,30))
+                    end
+                end
+    
+                ESP_TOGGLE_NPC = true
+    
+    
+                local con = game:GetService("Workspace").Live.ChildAdded:Connect(function(v)
+                    if v:WaitForChild("HumanoidRootPart") and not table.find(playersTable, v.Name) and v:FindFirstChild("Torso") then
+                        MobChar(v, Color3.fromRGB(255,30,30))
+                    end
+                end)
+    
+                break
+            elseif state == false then
+                    if con then
+                    con:Disconnect()
+                    end
+                    ESP_TOGGLE_NPC = false
+                end
+                break
+            end -- loop end
+        end)
+    
+        ShowMobs:AddToolTip("Mobs within the distance will be nametaged")
+    
+        local MobRender = worldSection:CreateSlider("Mob Render Distance", 0, 15000, 2000, true, function(currentValue)
+            getgenv().DistanceEnemy = currentValue
+        end)
+    
+        local ShowNpcs = worldSection:CreateToggle("Show NPCS", false, function(state)
+            while task.wait(0.5) do
+                if state == true then
+                for _,v in pairs(game:GetService("Workspace").NPCs:GetChildren()) do
+                    if v:FindFirstChild("HumanoidRootPart") and not table.find(playersTable, v.Name) then
+                        MobChar2(v, Color3.fromRGB(51,153,255))
+                    end
+                end
+    
+                ESP_TOGGLE_NPC2 = true
+    
+    
+                local con = game:GetService("Workspace").NPCs.ChildAdded:Connect(function(v)
+                    if v:WaitForChild("HumanoidRootPart") and not table.find(playersTable, v.Name) and v:FindFirstChild("Torso") then
+                        MobChar2(v, Color3.fromRGB(51,153,255))
+                    end
+                end)
+    
+                break
+            elseif state == false then
+                    if con then
+                    con:Disconnect()
+                    end
+                    ESP_TOGGLE_NPC2 = false
+                end
+                break
+            end -- loop end
+        end)
+    
+        local MobRender = worldSection:CreateSlider("NPC     Distance", 0, 15000, 2000, true, function(currentValue)
+            getgenv().DistanceNPC = currentValue
+        end)
+    
+        ShowNpcs:AddToolTip("NPCS within the distance will be nametaged")
+    
+        local ShowChests = worldSection:CreateToggle("Show Chests", false, function(state)
+            while task.wait(0.5) do
+                if state == true then
+                for _,v in pairs(game:GetService("Workspace").Thrown:GetChildren()) do
+                    if v:FindFirstChild("Lid") then
+                        Chest1(v, Color3.fromRGB(240,177,3))
+                    end
+                end
+    
+                ESP_CHEST = true
+    
+    
+                local con = game:GetService("Workspace").Thrown.ChildAdded:Connect(function(v)
+                    if v:FindFirstChild("Lid") then
+                        Chest1(v, Color3.fromRGB(240,177,3))
+                    end
+                end)
+    
+                break
+            elseif state == false then
+                    if con then
+                    con:Disconnect()
+                    end
+                    ESP_CHEST = false
+                end
+                break
+            end -- loop end
+        end)
+    
+        ShowChests:AddToolTip("Adds a nametag in the chests that are within the distance.")
+    
+        local MobRender = worldSection:CreateSlider("Chest Render Distance", 0, 15000, 2000, true, function(currentValue)
+            getgenv().DistanceChest = currentValue
+        end)
+    
+		local NoFog = worldSection:CreateButton("No Fog", function()
+			pcall(function()
+			Lighting.FogEnd = 100000
+			for i, effect in pairs(Lighting:GetDescendants()) do
+				if effect:IsA'Atmosphere' then
+					effect:Destroy()
+				end
+			end
+		end)
+		end)
+
+		local noblur = worldSection:CreateButton("No Blur", function()
+			pcall(function()
+			while task.wait() do
+				for _,blz in pairs(game.Lighting:children()) do
+					if blz:IsA('BlurEffect') then
+						blz:remove()
+					else
+						
+					end
+				end
+			end
+		end)
+		end)
+
+        local noclipcamera = worldSection:CreateButton("Camera No-Clip", function()
+            if not game:IsLoaded() then
+                game.Loaded:wait()
+            end
+            
+            local Players = game:GetService("Players")
+            
+            local LocalPlayer = Players.LocalPlayer
+            local PopperClient = LocalPlayer:WaitForChild("PlayerScripts").PlayerModule.CameraModule.ZoomController.Popper
+            
+            for i, v in next, getgc() do
+                if getfenv(v).script == PopperClient and typeof(v) == "function" then
+                    for i2, v2 in next, debug.getconstants(v) do
+                        if tonumber(v2) == 0.25 then
+                            debug.setconstant(v, i2, 0)
+                        elseif tonumber(v2) == 0 then
+                            debug.setconstant(v, i2, 0.25)
+                        end
+                    end
+                end
+            end
+		end)
+
+        local aglspofer = characterSection:CreateSlider("agility spoofer", 0, 500, 25, true, function(valueagl)
+			game.Players.LocalPlayer.Character.Agility.Value = valueagl
+		end)
+        
+        aglspofer:AddToolTip("Will Spoof/change your Agility so the game thinks you have that amount of points - tl;dr makes u spidermen ")
+        NoFog:AddToolTip("Removes your In-game fog")
+        
+        -- spectate player
+        pcall(function()
+            local uis = game:GetService("UserInputService")
+            uis.InputBegan:Connect(function(input,t)
+            pcall(function()
+            if input.UserInputType == Enum.UserInputType.MouseButton1 then
+            for i, v in pairs(game:GetService("Players").LocalPlayer.PlayerGui.LeaderboardGui.MainFrame.ScrollingFrame:GetChildren()) do
+                if not v:FindFirstChild("Player") then continue; end
+                local Player = v.Player;
+                if Player.TextTransparency > 0 then
+                    while v.Player.TextTransparency > 0 do workspace.CurrentCamera.CameraSubject = game.Players[v.Player.Text].Character task.wait() end
+                end
+            end
+            end
+            end)
+            end)
+            end)
+    
+        --NoFog:AddToolTip("Removes Fog")
+    
+        local Dropdown3 = settingsSection:CreateDropdown("Image", {"Default","Hearts","Abstract","Hexagon","Circles","Lace With Flowers","Floral","Nothing"}, function(Name)
+            if Name == "Default" then
+                Window:SetBackground("2151741365")
+            elseif Name == "Hearts" then
+                Window:SetBackground("6073763717")
+            elseif Name == "Abstract" then
+                Window:SetBackground("6073743871")
+            elseif Name == "Hexagon" then
+                Window:SetBackground("6073628839")
+            elseif Name == "Circles" then
+                Window:SetBackground("6071579801")
+            elseif Name == "Lace With Flowers" then
+                Window:SetBackground("6071575925")
+            elseif Name == "Floral" then
+                Window:SetBackground("5553946656")
+            elseif Name == "Nothing" then
+                Window:SetBackground("10840888087")
+            end
+        end)
+    
+        Dropdown3:SetOption("Floral")
+    
+        local Colorpicker4 = settingsSection:CreateColorpicker("Color", function(Color)
+            Window:SetBackgroundColor(Color)
+        end)
+        Colorpicker4:UpdateColor(Color3.new(0.615686, 0.078431, 0.078431))
+    
+        local Slider3 = settingsSection:CreateSlider("Transparency",0,1,nil,false, function(Value)
+            Window:SetBackgroundTransparency(Value)
+        end)
+        Slider3:SetValue(0)
+    
+        local Slider4 = settingsSection:CreateSlider("Tile Scale",0,1,nil,false, function(Value)
+            Window:SetTileScale(Value)
+        end)
+        Slider4:SetValue(0.5)
+    
+        local Colorpicker3 = settingsSection:CreateColorpicker("UI Color", function(Color)
+            Window:ChangeColor(Color)
+        end)
+    
+        local Toggle3 = settingsSection:CreateToggle("UI Toggle", nil, function(State)
+            Window:Toggle(State)
+        end)
+    
+        Toggle3:CreateKeybind(tostring(Config.Keybind):gsub("Enum.KeyCode.", ""), function(Key)
+            Config.Keybind = Enum.KeyCode[Key]
+        end)
+    
+        Toggle3:SetState(true)
+    
+        -- LOADED -- ALSO VERMILLION YOUR FUCKING RETARD DONT PUT ANYTHING DOWN HERE OR IT WONT LOAD FIRST
+        -- LOADED -- ALSO VERMILLION YOUR FUCKING RETARD DONT PUT ANYTHING DOWN HERE OR IT WONT LOAD FIRST
+        -- LOADED -- ALSO VERMILLION YOUR FUCKING RETARD DONT PUT ANYTHING DOWN HERE OR IT WONT LOAD FIRST
+        -- LOADED -- ALSO VERMILLION YOUR FUCKING RETARD DONT PUT ANYTHING DOWN HERE OR IT WONT LOAD FIRST
+        -- LOADED -- ALSO VERMILLION YOUR FUCKING RETARD DONT PUT ANYTHING DOWN HERE OR IT WONT LOAD FIRST
+        -- LOADED -- ALSO VERMILLION YOUR FUCKING RETARD DONT PUT ANYTHING DOWN HERE OR IT WONT LOAD FIRST
+        -- LOADED -- ALSO VERMILLION YOUR FUCKING RETARD DONT PUT ANYTHING DOWN HERE OR IT WONT LOAD FIRST
+        -- LOADED -- ALSO VERMILLION YOUR FUCKING RETARD DONT PUT ANYTHING DOWN HERE OR IT WONT LOAD FIRST
+        -- LOADED -- ALSO VERMILLION YOUR FUCKING RETARD DONT PUT ANYTHING DOWN HERE OR IT WONT LOAD FIRST
+        -- LOADED -- ALSO VERMILLION YOUR FUCKING RETARD DONT PUT ANYTHING DOWN HERE OR IT WONT LOAD FIRST
+        -- LOADED -- ALSO VERMILLION YOUR FUCKING RETARD DONT PUT ANYTHING DOWN HERE OR IT WONT LOAD FIRST
+        -- LOADED -- ALSO VERMILLION YOUR FUCKING RETARD DONT PUT ANYTHING DOWN HERE OR IT WONT LOAD FIRST
+        -- LOADED -- ALSO VERMILLION YOUR FUCKING RETARD DONT PUT ANYTHING DOWN HERE OR IT WONT LOAD FIRST
+        -- LOADED -- ALSO VERMILLION YOUR FUCKING RETARD DONT PUT ANYTHING DOWN HERE OR IT WONT LOAD FIRST
+        -- LOADED -- ALSO VERMILLION YOUR FUCKING RETARD DONT PUT ANYTHING DOWN HERE OR IT WONT LOAD FIRST
+        -- LOADED -- ALSO VERMILLION YOUR FUCKING RETARD DONT PUT ANYTHING DOWN HERE OR IT WONT LOAD FIRST
+        -- LOADED -- ALSO VERMILLION YOUR FUCKING RETARD DONT PUT ANYTHING DOWN HERE OR IT WONT LOAD FIRST
+        -- LOADED -- ALSO VERMILLION YOUR FUCKING RETARD DONT PUT ANYTHING DOWN HERE OR IT WONT LOAD FIRST
+        -- LOADED -- ALSO VERMILLION YOUR FUCKING RETARD DONT PUT ANYTHING DOWN HERE OR IT WONT LOAD FIRST
+        -- LOADED -- ALSO VERMILLION YOUR FUCKING RETARD DONT PUT ANYTHING DOWN HERE OR IT WONT LOAD FIRST
+        -- LOADED -- ALSO VERMILLION YOUR FUCKING RETARD DONT PUT ANYTHING DOWN HERE OR IT WONT LOAD FIRST
+        -- LOADED -- ALSO VERMILLION YOUR FUCKING RETARD DONT PUT ANYTHING DOWN HERE OR IT WONT LOAD FIRST
+        -- LOADED -- ALSO VERMILLION YOUR FUCKING RETARD DONT PUT ANYTHING DOWN HERE OR IT WONT LOAD FIRST
+    
+        game:GetService("StarterGui"):SetCore("SendNotification",{
+            Title = "Vision HUB HAS LOADED!", -- Required
+            Text = "Welcome to Vision Hub", -- Required
+        })
+    
+        print("Thanks for using our script.")
+    
+        task.wait(10)
+        if FLUXUS_LOADED and isfluxusfunction and is_fluxus_function and isfluxusclosure and fluxus and Fluxus and is_fluxus_closure then
+            game:GetService("StarterGui"):SetCore("SendNotification",{
+                Title = "EXPLOIT - FLUXUS", -- Required
+                Text = "Fluxus Detected", -- Required
+            })
+        elseif KRNL_LOADED then
+            game:GetService("StarterGui"):SetCore("SendNotification",{
+                Title = "EXPLOIT - Krnl", -- Required
+                Text = "Krnl Detected", -- Required
+            })
+        elseif syn then
+            game:GetService("StarterGui"):SetCore("SendNotification",{
+                Title = "EXPLOIT - Synapse X", -- Required
+                Text = "Synapse Detected", -- Required
+            })
+        else
+            game:GetService("StarterGui"):SetCore("SendNotification",{
+                Title = "Unknown Exploit", -- Required
+                Text = "Your Exploit is not registered, This may be not safe.", -- Required
+            })
+        end
+        end)
+
+
+        
